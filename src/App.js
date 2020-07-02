@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Button from "react-bootstrap/NavBar";
+import Alert from "react-bootstrap/Alert";
+import ZDevNavBar from "./ZontreckDevNavBar";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "./ZHomePage";
+import "./App.css";
+import About from "./AboutPage";
 
 function App() {
+  const show = true;
+  const HomePage = () => <Home />;
+  const AboutPage = () => <About />;
+  document.body.style = "background: black;color:green";
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      id="mainApp"
+      style={{
+        backgroundColor: "black",
+        color: "green",
+      }}
+    >
+      <center>
+        <ZDevNavBar />
+        <div class="generalAlertContainer">
+          <Alert variant="danger" show={show}>
+            This website is under construction, content may shift around
+            unexpectedly!
+          </Alert>
+        </div>
+      </center>
+      <Router>
+        <>
+          <Route path="/" exact component={HomePage}></Route>
+          <Route path="/about" exact component={AboutPage}></Route>
+        </>
+      </Router>
     </div>
   );
 }
