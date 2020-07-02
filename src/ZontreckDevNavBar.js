@@ -1,7 +1,6 @@
 import React from "react";
-import Navbar from "react-bootstrap/NavBar";
+import { Navbar, Nav } from "react-bootstrap";
 import logo from "./logo.svg";
-import Nav from "react-bootstrap/Nav";
 import { withRouter } from "react-router";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 const HDR = (props) => {

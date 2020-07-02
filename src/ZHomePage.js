@@ -1,6 +1,6 @@
 import React from "react";
 import gh from "./gh_zon.png";
-import Table from "react-bootstrap/Table";
+import { Table } from "react-bootstrap";
 
 function Home() {
   return (

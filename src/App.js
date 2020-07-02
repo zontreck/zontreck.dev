@@ -1,6 +1,5 @@
 import React from "react";
-import Button from "react-bootstrap/NavBar";
-import Alert from "react-bootstrap/Alert";
+import { Alert } from "react-bootstrap";
 import ZDevNavBar from "./ZontreckDevNavBar";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./ZHomePage";
