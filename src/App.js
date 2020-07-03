@@ -28,12 +28,21 @@ function App() {
           </Alert>
         </div>
       </center>
-      <Router>
-        <>
-          <Route path="/" exact component={HomePage}></Route>
-          <Route path="/about" exact component={AboutPage}></Route>
-        </>
-      </Router>
+      <div
+        style={{
+          position: "fixed",
+          top: 100,
+          left: 0,
+          height: "100%",
+        }}
+      >
+        <Router>
+          <>
+            <Route path="/" exact component={HomePage}></Route>
+            <Route path="/about" exact component={AboutPage}></Route>
+          </>
+        </Router>
+      </div>
     </div>
   );
 }
