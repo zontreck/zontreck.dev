@@ -21,7 +21,14 @@ function App() {
     >
       <center>
         <ZDevNavBar />
-        <div class="generalAlertContainer">
+        <div
+          class="generalAlertContainer"
+          style={{
+            position: "fixed",
+            left: "50%",
+            top: "100",
+          }}
+        >
           <Alert variant="danger" show={show}>
             This website is under construction, content may shift around
             unexpectedly!
