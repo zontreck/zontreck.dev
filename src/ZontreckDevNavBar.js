@@ -10,7 +10,8 @@ const HDR = (props) => {
     <Navbar
       bg="dark"
       variant="dark"
-      style={{ position: "fixed", zIndex: 100, top: 0, width: "100%" }}
+      style={{ zIndex: 100, width: "100%" }}
+      sticky={"top"}
     >
       <Navbar.Brand href="/">
         <img

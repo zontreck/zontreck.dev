@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./ZHomePage";
 import "./App.css";
 import About from "./AboutPage";
+import MakeAlert from "./Notification";
 
 function App() {
   const show = true;
@@ -21,25 +22,36 @@ function App() {
     >
       <center>
         <ZDevNavBar />
+
         <div
-          class="generalAlertContainer"
+          aria-live="polite"
+          aria-atomic="true"
           style={{
             position: "fixed",
-            left: "50%",
-            top: "100",
+            minHeight: "200px",
+            top: 100,
+            right: 50,
+            zIndex: 1000,
+            width: "50%",
+            height: "100%",
           }}
         >
-          <Alert variant="danger" show={show}>
-            This website is under construction, content may shift around
-            unexpectedly!
-          </Alert>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+            }}
+          >
+            <MakeAlert
+              AlertTitle="This website is under construction"
+              AlertBody="Content may shift around unexpectedly!"
+            />
+          </div>
         </div>
       </center>
       <div
         style={{
-          position: "fixed",
-          top: 100,
-          left: 0,
           height: "100%",
         }}
       >

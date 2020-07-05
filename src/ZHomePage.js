@@ -58,7 +58,7 @@ function Home() {
                   </td>
                 </tr>
                 <tr>
-                  <td>ci.zontreck.dev:8080</td>
+                  <td>ci.zontreck.dev:8090</td>
                   <td>
                     Continuous integration server. This builds all my software,
                     as well as software I use frequently to speed up deployment
