@@ -1,69 +1,111 @@
-import React from "react";
-import { Alert } from "react-bootstrap";
-import ZDevNavBar from "./ZontreckDevNavBar";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Home from "./ZHomePage";
 import "./App.css";
-import About from "./AboutPage";
-import MakeAlert from "./Notification";
+import Home from "./Home.js";
+import RegisterPage from "./RegisterPage.js";
+import LoginPage from "./LoginPage.js";
+import React, { useState } from "react";
+import { Collapse, Nav, Dropdown, Navbar, NavDropdown } from "react-bootstrap";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { ToastProvider } from "react-toast-notifications";
+import AccountMenu from "./MenuHandlers/AccountMenu.js";
+import AccountPage from "./Account.js";
+import LogoutPage from "./Logout.js";
+import ChangePasswordPage from "./ChangePassword.js";
+import ZDevNotifierCheck from "./ZontreckDevNotificationChecks.js";
 
-function App() {
-  const show = true;
-  const HomePage = () => <Home />;
-  const AboutPage = () => <About />;
-  document.body.style = "background: black;color:green";
+const App = (props) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+  var level = 0;
+  var user = "";
+  var xhr = new XMLHttpRequest();
+  var isLoggedIn = false;
+  const processHTTP = () => {
+    if (xhr.readyState === 4) {
+      var data = xhr.responseText.split(";;");
+      if (data[0] == "LoginSessionData") {
+        // Data 1 - The variable
+        // Data 2 - The value
+
+        if (data[1] == "user") {
+          user = data[2];
+          if (data[2] === "n/a/n") {
+            console.log("No user defined in login state");
+            user = "";
+            level = -1;
+            return;
+          }
+          xhr = new XMLHttpRequest();
+          xhr.addEventListener("load", processHTTP);
+          xhr.open(
+            "GET",
+            "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=level&action=get",
+            false
+          );
+          xhr.send();
+        } else if (data[1] == "level") {
+          level = Number(data[2]);
+          if (data[2] === "n/a/n") {
+            console.log("No user level in login state. not logged in");
+            level = -1;
+            return;
+          }
+          isLoggedIn = true;
+          console.log(
+            "You are logged in with level " +
+              level +
+              " authority\nUsername: " +
+              user
+          );
+        }
+      }
+    }
+  };
+  const checkLoginStatus = () => {
+    xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
+      false
+    );
+    // TODO : Change this to a Promise so the nesting is not as bad to avoid duplicated requests
+    xhr.addEventListener("load", processHTTP);
+    xhr.send();
+  };
+
+  checkLoginStatus();
+
   return (
-    <div
-      id="mainApp"
-      style={{
-        backgroundColor: "black",
-        color: "green",
-      }}
-    >
-      <center>
-        <ZDevNavBar />
-
-        <div
-          aria-live="polite"
-          aria-atomic="true"
-          style={{
-            position: "fixed",
-            minHeight: "200px",
-            top: 100,
-            right: 50,
-            zIndex: 1000,
-            width: "50%",
-            height: "100%",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-            }}
-          >
-            <MakeAlert
-              AlertTitle="This website is under construction"
-              AlertBody="Content may shift around unexpectedly!"
-            />
-          </div>
-        </div>
-      </center>
-      <div
-        style={{
-          height: "100%",
-        }}
-      >
+    <div class="mainApp">
+      <Navbar bg="dark" variant="dark">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Brand href="/">Zontreck.dev - Home of LS Bionics</Navbar.Brand>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              <AccountMenu UserName={user} IsLoggedIn={isLoggedIn} />
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+      <ToastProvider PlacementType="top-right">
+        <ZDevNotifierCheck />
         <Router>
           <>
-            <Route path="/" exact component={HomePage}></Route>
-            <Route path="/about" exact component={AboutPage}></Route>
+            <Route path="/" exact component={Home}></Route>
+            <Route path="/register" exact component={RegisterPage}></Route>
+            <Route path="/login" exact component={LoginPage}></Route>
+            <Route path="/account" exact component={AccountPage}></Route>
+            <Route path="/logout" exact component={LogoutPage}></Route>
+            <Route
+              path="/account/new_password"
+              exact
+              component={ChangePasswordPage}
+            ></Route>
           </>
         </Router>
-      </div>
+      </ToastProvider>
     </div>
   );
-}
+};
 
 export default App;
