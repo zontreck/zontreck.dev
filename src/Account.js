@@ -10,28 +10,34 @@ import {
   Form,
 } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
+import Search from "./Search.js";
 
 const AccountPage = (props) => {
   // Grab the user name, and level from the session data.
   const { addToast } = useToasts();
-
+  const [UserName, setUser] = useState("");
+  const [Level, setLevel] = useState(-1);
   const unixTime = () => {
     return Math.floor(Date.now() / 1000);
   };
   const [notifMaker, setNotifMaker] = useState(false);
   const toggleNotificationModal = () => setNotifMaker(!notifMaker);
 
-  var UserName = "";
-  var Level = -1;
+  var tmpUser = "";
   var xhr = new XMLHttpRequest();
   const processHTTP = () => {
     if (xhr.readyState === 4) {
       var data = xhr.responseText.split(";;");
       if (data[0] == "LoginSessionData") {
         if (data[1] == "user") {
-          UserName = data[2];
+          tmpUser = data[2];
+          setTimeout(() => {
+            setUser(data[2]);
+          }, 1000);
           if (UserName == "n/a/n") {
-            UserName = "";
+            setTimeout(() => {
+              setUser("");
+            }, 1500);
           }
 
           xhr = new XMLHttpRequest();
@@ -43,10 +49,12 @@ const AccountPage = (props) => {
           xhr.addEventListener("load", processHTTP);
           xhr.send();
         } else if (data[1] == "level") {
-          Level = Number(data[2]);
           if (data[2] == "n/a/n") {
             window.location = "/login";
           }
+          setTimeout(() => {
+            setLevel(Number(data[2]));
+          }, 2000);
         }
       }
     }
@@ -90,28 +98,33 @@ const AccountPage = (props) => {
     }, 5000);
   };
 
-  var noticeText = "";
+  const [noticeText, setNoticeText] = useState("");
   const handleNoticeText = (e) => {
-    noticeText = e.target.value;
+    setNoticeText(e.target.value);
   };
-  var noticeMinutes = 30;
+  const [noticeMinutes, setNoticeMinutes] = useState(30);
   const handleNoticeMinutes = (e) => {
-    noticeMinutes = Number(e.target.value);
+    setNoticeMinutes(Number(e.target.value));
   };
 
-  var noticeDuration = 5;
+  const [noticeDuration, setNoticeDuration] = useState(5);
   const handleNoticeDuration = (e) => {
-    noticeDuration = Number(e.target.value);
+    setNoticeDuration(Number(e.target.value));
   };
 
-  var noticeColor = "";
+  const [noticeColor, setNoticeColor] = useState("");
   const handleNoticeColor = (e) => {
-    if (e.target.value == "Green") noticeColor = "success";
-    else noticeColor = "error";
+    setNoticeColor(e.target.value);
+  };
+
+  const translateNoticeColor = () => {
+    if (noticeColor == "Green") return "success";
+    else return "error";
   };
 
   const doMakeNotification = () => {
     // Send the notification data to the server then close this Form
+
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
@@ -127,7 +140,7 @@ const AccountPage = (props) => {
       "&expire=" +
       noticeDuration * 1000 +
       "&color=" +
-      noticeColor;
+      translateNoticeColor();
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
         var data = xhr.responseText.split(";;");
@@ -212,10 +225,7 @@ const AccountPage = (props) => {
                 {Level >= 3 && (
                   <Tab eventKey="search" title="Search">
                     <br />
-                    <h2>
-                      Take care. This is a administrative tool. You can search
-                      for a user and even edit their stores. Please be cautious.
-                    </h2>
+                    <Search />
                   </Tab>
                 )}
                 {Level >= 4 && (
@@ -291,6 +301,7 @@ const AccountPage = (props) => {
                   type="text"
                   placeholder="This is the text displayed on the notice"
                   onChange={handleNoticeText}
+                  value={noticeText}
                 ></Form.Control>
               </Form.Group>
               <Form.Group>
@@ -299,6 +310,7 @@ const AccountPage = (props) => {
                   type="number"
                   placeholder="30"
                   onChange={handleNoticeMinutes}
+                  value={noticeMinutes}
                 ></Form.Control>
               </Form.Group>
               <Form.Group>
@@ -307,6 +319,7 @@ const AccountPage = (props) => {
                   type="number"
                   placeholder="5"
                   onChange={handleNoticeDuration}
+                  value={noticeDuration}
                 ></Form.Control>
               </Form.Group>
               <Form.Group>
@@ -315,6 +328,7 @@ const AccountPage = (props) => {
                   as="select"
                   defaultValue="Choose .."
                   onChange={handleNoticeColor}
+                  value={noticeColor}
                 >
                   <option>Choose ..</option>
                   <option>Green</option>

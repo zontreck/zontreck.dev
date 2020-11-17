@@ -12,15 +12,15 @@ import { useToasts } from "react-toast-notifications";
 
 const ChangePasswordPage = (props) => {
   const { addToast } = useToasts();
-  var oldPwd = "";
-  var newPwd = "";
+  const [oldPwd, setOldPwd] = useState('');
+  const [newPwd, setNewPwd] = useState('');
 
   const handleOldChange = (e) => {
-    oldPwd = e.target.value;
+    setOldPwd(e.target.value);
   };
 
   const handleNewChange = (e) => {
-    newPwd = e.target.value;
+    setNewPwd(e.target.value);
   };
 
   const changePassword = () => {
