@@ -4,6 +4,7 @@ import { Form, Col, Table, Button } from "react-bootstrap";
 import SingleTimers from "./SingleTimers.js";
 
 const Search = (props) => {
+  const { addToast } = useToasts();
   const [searchText, setSearchText] = useState("");
   const [table, setTable] = useState([]);
   const processHTTP = () => {
@@ -35,38 +36,92 @@ const Search = (props) => {
     xhr.addEventListener("load", processHTTP);
     xhr.send(params);
   };
-
+  const impersonate = (userx, levelx) => {
+    console.log("Beginning user impersonation");
+    console.log("impersonate user: " + userx + "; " + levelx);
+    var xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      "https://api.zontreck.dev/ls_bionics/AdminActions.php?type=impersonate&user=" +
+        userx +
+        "&level=" +
+        levelx,
+      false
+    );
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.addEventListener("load", () => {
+      if (xhr.readyState === 4) {
+        console.log("response: " + xhr.responseText);
+        var d = xhr.responseText.split(";;");
+        if (d[0] == "AdminActions") {
+          if (d[1] == "1") {
+            addToast("Unauthorized", {
+              appearance: "error",
+              autoDismiss: true,
+              autoDismissTimeout: 2500,
+            });
+          } else if (d[1] == "0") {
+            addToast("Impersonation success", { appearance: "success" });
+            setTimeout(() => {
+              window.location = "/account";
+            }, 5000);
+          }
+        }
+      }
+    });
+    xhr.send();
+  };
   const renderUserSearch = (entry, index) => {
     return (
       <tr key={index}>
         <td>{entry.username}</td>
         <td>{entry.level}</td>
-        <td>Not implemented</td>
+        <td>
+          <Button
+            onClick={() => impersonate(entry.username, entry.level)}
+            variant="danger"
+          >
+            Impersonate
+          </Button>
+        </td>
       </tr>
     );
   };
 
   //SingleTimers.instance().add(updateSearchText, 10000, "update_search_text");
   //setInterval(updateSearchText, 10000);
-  const handleNewSearch = (event) =>{
-      setTable([]);
-      setSearchText(event.target.value);
-  }
-
+  const handleNewSearch = (event) => {
+    setTable([]);
+    setSearchText(event.target.value);
+  };
 
   return (
     <div>
       <Form>
         <Form.Row>
           <Form.Label sm="2">Search Query: </Form.Label>
-          <Col sm="10">
+          <Col sm="6">
             {" "}
             <Form.Control
               type="text"
               value={searchText}
               onChange={handleNewSearch}
             ></Form.Control>
-            <Button onClick={()=>setTimeout(updateSearchText, 5000)} variant="primary">Search</Button>
+          </Col>
+          <Col sm="2">
+            <Button
+              onClick={() => {
+                addToast("Searching...", {
+                  appearance: "success",
+                  autoDismiss: true,
+                  autoDismissTimeout: 1500,
+                });
+                setTimeout(updateSearchText, 5000);
+              }}
+              variant="primary"
+            >
+              Search
+            </Button>
           </Col>
         </Form.Row>
       </Form>

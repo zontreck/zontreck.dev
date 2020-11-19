@@ -11,6 +11,7 @@ import {
 } from "react-bootstrap";
 import { useToasts } from "react-toast-notifications";
 import Search from "./Search.js";
+import ProductsTab from "./ProductsTab.js";
 
 const AccountPage = (props) => {
   // Grab the user name, and level from the session data.
@@ -22,6 +23,7 @@ const AccountPage = (props) => {
   };
   const [notifMaker, setNotifMaker] = useState(false);
   const toggleNotificationModal = () => setNotifMaker(!notifMaker);
+  const [impersonate, setImpersonate] = useState(false);
 
   var tmpUser = "";
   var xhr = new XMLHttpRequest();
@@ -55,6 +57,45 @@ const AccountPage = (props) => {
           setTimeout(() => {
             setLevel(Number(data[2]));
           }, 2000);
+
+          xhr = new XMLHttpRequest();
+          xhr.open(
+            "GET",
+            "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=impersonation&action=get",
+            false
+          );
+          xhr.addEventListener("load", processHTTP);
+          xhr.send();
+        } else if (data[1] == "impersonation") {
+          if (data[2] == "n/a/n") {
+            setTimeout(() => {
+              setImpersonate(false);
+            }, 2500);
+          } else {
+            setTimeout(() => {
+              setImpersonate(true);
+            }, 2500);
+          }
+        }
+      } else if (data[0] == "AdminActions") {
+        if (data[1] == "2") {
+          addToast("Impersonation is not active", {
+            appearance: "error",
+            autoDismiss: true,
+            autoDismissTimeout: 5000,
+          });
+          setTimeout(() => {
+            setImpersonate(false);
+          }, 5000);
+        } else if (data[1] == "3") {
+          addToast("Impersonation has ended", {
+            appearance: "success",
+            autoDismiss: true,
+            autoDismissTimeout: 2500,
+          });
+          setTimeout(() => {
+            window.location = "/account";
+          }, 5000);
         }
       }
     }
@@ -66,13 +107,16 @@ const AccountPage = (props) => {
     else if (Level == 4) return "LS Operator";
     else if (Level == 5) return "LS Owners";
   };
-  xhr.open(
-    "GET",
-    "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
-    false
-  );
-  xhr.addEventListener("load", processHTTP);
-  xhr.send();
+  const runSessionFetch = () => {
+    xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
+      false
+    );
+    xhr.addEventListener("load", processHTTP);
+    xhr.send();
+  };
 
   const [deletePrompt, setDeletePrompt] = useState(false);
   const toggleDeletePrompt = () => setDeletePrompt(!deletePrompt);
@@ -120,6 +164,17 @@ const AccountPage = (props) => {
   const translateNoticeColor = () => {
     if (noticeColor == "Green") return "success";
     else return "error";
+  };
+
+  const deimpersonate = () => {
+    xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      "https://api.zontreck.dev/ls_bionics/AdminActions.php?type=deimpersonate",
+      false
+    );
+    xhr.addEventListener("load", processHTTP);
+    xhr.send();
   };
 
   const doMakeNotification = () => {
@@ -176,6 +231,7 @@ const AccountPage = (props) => {
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           <Breadcrumb.Item active>Account</Breadcrumb.Item>
         </Breadcrumb>
+        {Level == -1 && runSessionFetch()}
         <Card style={{ width: "64rem", color: "#00a5a5" }}>
           <Card.Body>
             <Card.Title>{UserName}</Card.Title>
@@ -183,6 +239,11 @@ const AccountPage = (props) => {
               Rank: {rankName()}
             </Card.Subtitle>
             <Card.Text style={{ color: "black" }}>
+              {impersonate && (
+                <Button variant="primary" onClick={() => deimpersonate()}>
+                  Deimpersonate
+                </Button>
+              )}
               <Tabs defaultActiveKey="home">
                 <Tab eventKey="home" title="Home">
                   <br />
@@ -216,11 +277,9 @@ const AccountPage = (props) => {
                     </tbody>
                   </Table>
                 </Tab>
-                <Tab eventKey="stores" title="Stores">
+                <Tab eventKey="products" title="Products">
                   <br />
-                  <h2>
-                    Your store, and any you are a manager in will appear here.
-                  </h2>
+                  <ProductsTab />
                 </Tab>
                 {Level >= 3 && (
                   <Tab eventKey="search" title="Search">

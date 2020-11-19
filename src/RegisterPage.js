@@ -165,7 +165,7 @@ const RegisterPage = (props) => {
               <Form.Control
                 type="password"
                 id="password"
-                onChange={password}
+                onChange={handlePass}
                 placeholder="Not your SL Password"
                 value={password}
               />

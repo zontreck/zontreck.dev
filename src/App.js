@@ -11,6 +11,9 @@ import AccountPage from "./Account.js";
 import LogoutPage from "./Logout.js";
 import ChangePasswordPage from "./ChangePassword.js";
 import ZDevNotifierCheck from "./ZontreckDevNotificationChecks.js";
+import StoresPage from "./Products/StoresPage.js";
+import StoreEditor from "./Products/StoreEditor.js";
+import StoreProductsView from "./Products/StoreProductsView.js";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,6 +104,25 @@ const App = (props) => {
               exact
               component={ChangePasswordPage}
             ></Route>
+            <Route
+              path="/account/products/stores"
+              exact
+              component={StoresPage}
+            ></Route>
+            <Route
+              path="/account/products/stores/:storeName"
+              exact
+              render={(props) => {
+                return <StoreEditor {...props} />;
+              }}
+            />
+            <Route
+              path="/account/products/stores/:storeName/products"
+              exact
+              render={(props) => {
+                return <StoreProductsView {...props} />;
+              }}
+            />
           </>
         </Router>
       </ToastProvider>
