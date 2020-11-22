@@ -9,6 +9,7 @@ import {
   Col,
   Badge,
   Modal,
+  Table,
 } from "react-bootstrap";
 
 const StoreEditor = (props) => {
@@ -273,6 +274,35 @@ const StoreEditor = (props) => {
                 </Form.Row>
               )}
             </Form>
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <Button
+                      variant="primary"
+                      href={
+                        "/account/products/stores/" + storeName + "/products"
+                      }
+                    >
+                      Product Manager
+                    </Button>{" "}
+                    <Button
+                      variant="primary"
+                      href={
+                        "/account/products/stores/" + storeName + "/vendors"
+                      }
+                    >
+                      Vendor Manager
+                    </Button>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
           </Card.Body>
           <Card.Footer>
             {myUser == storeOwner && (

@@ -277,10 +277,12 @@ const AccountPage = (props) => {
                     </tbody>
                   </Table>
                 </Tab>
-                <Tab eventKey="products" title="Products">
-                  <br />
-                  <ProductsTab />
-                </Tab>
+                {Level >= 2 && (
+                  <Tab eventKey="products" title="Products">
+                    <br />
+                    <ProductsTab />
+                  </Tab>
+                )}
                 {Level >= 3 && (
                   <Tab eventKey="search" title="Search">
                     <br />
