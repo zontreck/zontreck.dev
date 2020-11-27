@@ -14,6 +14,7 @@ import ZDevNotifierCheck from "./ZontreckDevNotificationChecks.js";
 import StoresPage from "./Products/StoresPage.js";
 import StoreEditor from "./Products/StoreEditor.js";
 import StoreProductsView from "./Products/StoreProductsView.js";
+import VendorView from "./Products/VendorView.js";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,8 @@ const App = (props) => {
   var user = "";
   var xhr = new XMLHttpRequest();
   var isLoggedIn = false;
+
+  document.body.style = "background-color: black";
   const processHTTP = () => {
     if (xhr.readyState === 4) {
       var data = xhr.responseText.split(";;");
@@ -123,6 +126,9 @@ const App = (props) => {
                 return <StoreProductsView {...props} />;
               }}
             />
+            <Route path="/account/products/stores/:storeName/vendors" exact render={(props) => {
+              return <VendorView {...props} />;
+            }}/>
           </>
         </Router>
       </ToastProvider>

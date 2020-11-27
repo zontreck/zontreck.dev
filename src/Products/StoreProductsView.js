@@ -206,6 +206,10 @@ const StoreProductsView = (props) => {
       refreshInventoryList();
     }, 4000);
 
+    setTimeout(()=>{
+      setVendorItem("Choose ..");
+    }, 4500);
+
     setProductEditorVisible(true);
 
     addToast(
