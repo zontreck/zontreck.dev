@@ -2,7 +2,11 @@ import React from "react";
 
 const LogoutPage = (props) => {
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://api.zontreck.dev/ls_bionics/LogoutAccount.php", false);
+  xhr.open(
+    "GET",
+    "https://api.zontreck.dev/ls_bionics/LogoutAccount.php",
+    false
+  );
   xhr.send();
 
   setTimeout(() => {
@@ -17,6 +21,5 @@ const LogoutPage = (props) => {
     </div>
   );
 };
-
 
 export default LogoutPage;

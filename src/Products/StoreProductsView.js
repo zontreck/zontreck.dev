@@ -141,9 +141,9 @@ const StoreProductsView = (props) => {
             setVendorItem(dx[6]);
           }, 1000);
 
-          setTimeout(()=>{
-              setProductEditorVisible(true);
-          },5000);
+          setTimeout(() => {
+            setProductEditorVisible(true);
+          }, 5000);
         }
       }
     }
@@ -206,7 +206,7 @@ const StoreProductsView = (props) => {
       refreshInventoryList();
     }, 4000);
 
-    setTimeout(()=>{
+    setTimeout(() => {
       setVendorItem("Choose ..");
     }, 4500);
 
@@ -293,7 +293,9 @@ const StoreProductsView = (props) => {
       "&vendor_item=" +
       encodeURI(productVendorItem) +
       "&texture=" +
-      encodeURI(productTexture);
+      encodeURI(productTexture) +
+      "&user=" +
+      encodeURI(storeOwner);
 
     console.log(
       "POST URL: https://api.zontreck.dev/ls_bionics/Save_Product.php\n\nData: " +

@@ -126,9 +126,13 @@ const App = (props) => {
                 return <StoreProductsView {...props} />;
               }}
             />
-            <Route path="/account/products/stores/:storeName/vendors" exact render={(props) => {
-              return <VendorView {...props} />;
-            }}/>
+            <Route
+              path="/account/products/stores/:storeName/vendors"
+              exact
+              render={(props) => {
+                return <VendorView {...props} />;
+              }}
+            />
           </>
         </Router>
       </ToastProvider>

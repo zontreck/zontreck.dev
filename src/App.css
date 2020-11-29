@@ -1,19 +1,17 @@
 .mainApp {
   background-color: #000000;
-  color: #00FF00;
-  height:100%;
+  color: #00ff00;
+  height: 100%;
   width: 100%;
 }
 
-.XBody
-{
+.XBody {
   background-color: #000000;
 }
 
-.registerForm
-{
-    width: 50vh;
-    height:25vh;
-    top:50vh;
-    left: 50vh;
+.registerForm {
+  width: 50vh;
+  height: 25vh;
+  top: 50vh;
+  left: 50vh;
 }
