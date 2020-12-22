@@ -15,6 +15,8 @@ import StoresPage from "./Products/StoresPage.js";
 import StoreEditor from "./Products/StoreEditor.js";
 import StoreProductsView from "./Products/StoreProductsView.js";
 import VendorView from "./Products/VendorView.js";
+import OpenSimManager from "./Products/OpenSimulatorManager.js";
+import {Memory} from "./MemorySingleton.js";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +25,7 @@ const App = (props) => {
   var user = "";
   var xhr = new XMLHttpRequest();
   var isLoggedIn = false;
+  const Mem = new Memory();
 
   document.body.style = "background-color: black";
   const processHTTP = () => {
@@ -48,6 +51,7 @@ const App = (props) => {
             false
           );
           xhr.send();
+          Mem.User=user;
         } else if (data[1] == "level") {
           level = Number(data[2]);
           if (data[2] === "n/a/n") {
@@ -62,6 +66,8 @@ const App = (props) => {
               " authority\nUsername: " +
               user
           );
+
+          Mem.Level=level;
         }
       }
     }
@@ -132,6 +138,12 @@ const App = (props) => {
               render={(props) => {
                 return <VendorView {...props} />;
               }}
+            />
+
+            <Route
+              path="/account/products/opensim"
+              exact
+              component={OpenSimManager}
             />
           </>
         </Router>

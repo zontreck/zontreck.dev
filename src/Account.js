@@ -12,6 +12,9 @@ import {
 import { useToasts } from "react-toast-notifications";
 import Search from "./Search.js";
 import ProductsTab from "./ProductsTab.js";
+import {Memory} from "./MemorySingleton.js";
+
+
 
 const AccountPage = (props) => {
   // Grab the user name, and level from the session data.
@@ -24,6 +27,8 @@ const AccountPage = (props) => {
   const [notifMaker, setNotifMaker] = useState(false);
   const toggleNotificationModal = () => setNotifMaker(!notifMaker);
   const [impersonate, setImpersonate] = useState(false);
+const mem = new Memory();
+
 
   var tmpUser = "";
   var xhr = new XMLHttpRequest();
@@ -31,42 +36,7 @@ const AccountPage = (props) => {
     if (xhr.readyState === 4) {
       var data = xhr.responseText.split(";;");
       if (data[0] == "LoginSessionData") {
-        if (data[1] == "user") {
-          tmpUser = data[2];
-          setTimeout(() => {
-            setUser(data[2]);
-          }, 1000);
-          if (UserName == "n/a/n") {
-            setTimeout(() => {
-              setUser("");
-            }, 1500);
-          }
-
-          xhr = new XMLHttpRequest();
-          xhr.open(
-            "GET",
-            "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=level&action=get",
-            false
-          );
-          xhr.addEventListener("load", processHTTP);
-          xhr.send();
-        } else if (data[1] == "level") {
-          if (data[2] == "n/a/n") {
-            window.location = "/login";
-          }
-          setTimeout(() => {
-            setLevel(Number(data[2]));
-          }, 2000);
-
-          xhr = new XMLHttpRequest();
-          xhr.open(
-            "GET",
-            "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=impersonation&action=get",
-            false
-          );
-          xhr.addEventListener("load", processHTTP);
-          xhr.send();
-        } else if (data[1] == "impersonation") {
+        if (data[1] == "impersonation") {
           if (data[2] == "n/a/n") {
             setTimeout(() => {
               setImpersonate(false);
@@ -76,6 +46,9 @@ const AccountPage = (props) => {
               setImpersonate(true);
             }, 2500);
           }
+          mem.Impersonate=impersonate;
+          setUser(mem.User);
+          setLevel(mem.Level);
         }
       } else if (data[0] == "AdminActions") {
         if (data[1] == "2") {
@@ -86,6 +59,7 @@ const AccountPage = (props) => {
           });
           setTimeout(() => {
             setImpersonate(false);
+            mem.Impersonate=false;
           }, 5000);
         } else if (data[1] == "3") {
           addToast("Impersonation has ended", {
@@ -94,6 +68,7 @@ const AccountPage = (props) => {
             autoDismissTimeout: 2500,
           });
           setTimeout(() => {
+              mem.Impersonate=false;
             window.location = "/account";
           }, 5000);
         }
@@ -111,7 +86,7 @@ const AccountPage = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
+      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=impersonation&action=get",
       false
     );
     xhr.addEventListener("load", processHTTP);

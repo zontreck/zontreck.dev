@@ -128,7 +128,7 @@ const VendorView = (props) => {
         }
       } else if (datas[0] == "LSVendor") {
         // request has completed!
-    } else if (datas[0] == "LoginSessionData") {
+      } else if (datas[0] == "LoginSessionData") {
         if (datas[1] == "user") {
           if (datas[2] == "n/a/n") {
             window.location = "/login";
@@ -353,7 +353,16 @@ const VendorView = (props) => {
               </Button>
             </div>
           </Card.Header>
-          <Card.Body>{vendors.map(renderVendorsList)}</Card.Body>
+          <Card.Body>
+            {vendors.map(renderVendorsList)}
+            <br />
+            <Card className="bg-dark text-white">
+              <Card.Header>Unassociated Vendors</Card.Header>
+              <Card.Body>
+                The list of vendors not yet assigned to a store
+              </Card.Body>
+            </Card>
+          </Card.Body>
           <Card.Footer>Store Owner: {storeOwner}</Card.Footer>
         </Card>
       </center>

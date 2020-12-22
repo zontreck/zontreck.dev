@@ -23,6 +23,15 @@ const ProductsTab = (props) => {
               </Button>
             </td>
           </tr>
+          <tr>
+            <td>OpenSimulator</td>
+            <td>Account Management for OpenSim</td>
+            <td>
+              <Button href="/account/products/opensim" variant="primary">
+                View
+              </Button>
+            </td>
+          </tr>
         </tbody>
       </Table>
     </div>
