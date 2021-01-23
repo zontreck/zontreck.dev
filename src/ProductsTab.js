@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useToasts } from "react-toast-notifications";
 import { Form, Button, Table } from "react-bootstrap";
+import { Memory } from "./MemorySingleton.js";
 
 const ProductsTab = (props) => {
+  const mem = new Memory();
   return (
     <div>
       <Table striped bordered hover variant="dark">
@@ -32,6 +34,29 @@ const ProductsTab = (props) => {
               </Button>
             </td>
           </tr>
+          <tr>
+            <td>Particle Editor</td>
+            <td>
+              Interactive particle editor, inspired by Schmobag Hogfather's
+              Schmarticles
+            </td>
+            <td>
+              <Button href="/account/products/particle" variant="primary">
+                View
+              </Button>
+            </td>
+          </tr>
+          {mem.Level >= 3 && (
+            <tr>
+              <td>Cards Against Humanity</td>
+              <td>Card Creation Tool for Admins</td>
+              <td>
+                <Button href="/account/products/cah_manager" variant="primary">
+                  View
+                </Button>
+              </td>
+            </tr>
+          )}
         </tbody>
       </Table>
     </div>

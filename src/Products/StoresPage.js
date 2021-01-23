@@ -34,7 +34,7 @@ const StoresPage = () => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/Create_Store.php",
+      "https://api.zontreck.dev/zni/Create_Store.php",
       true
     );
     xhr.addEventListener("load", () => {
@@ -77,7 +77,7 @@ const StoresPage = () => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/List_Stores.php",
+      "https://api.zontreck.dev/zni/List_Stores.php",
       false
     );
     xhr.addEventListener("load", () => {
@@ -156,7 +156,7 @@ const StoresPage = () => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
+      "https://api.zontreck.dev/zni/SessionsData.php?var=user&action=get",
       false
     );
     setIsLoggedIn(true);

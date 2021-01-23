@@ -16,7 +16,11 @@ import StoreEditor from "./Products/StoreEditor.js";
 import StoreProductsView from "./Products/StoreProductsView.js";
 import VendorView from "./Products/VendorView.js";
 import OpenSimManager from "./Products/OpenSimulatorManager.js";
-import {Memory} from "./MemorySingleton.js";
+import { Memory } from "./MemorySingleton.js";
+import CAHManagerView from "./Products/CAHManagerView.js";
+import CAHDeckEditorView from "./Products/CAHDeckEditorView.js";
+import CAHDeckScriptView from "./Products/CAHDeckScriptView";
+import CAHCardEditorView from "./Products/CAHCardEditorView";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,11 +51,11 @@ const App = (props) => {
           xhr.addEventListener("load", processHTTP);
           xhr.open(
             "GET",
-            "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=level&action=get",
+            "https://api.zontreck.dev/zni/SessionsData.php?var=level&action=get",
             false
           );
           xhr.send();
-          Mem.User=user;
+          Mem.User = user;
         } else if (data[1] == "level") {
           level = Number(data[2]);
           if (data[2] === "n/a/n") {
@@ -67,7 +71,7 @@ const App = (props) => {
               user
           );
 
-          Mem.Level=level;
+          Mem.Level = level;
         }
       }
     }
@@ -76,7 +80,7 @@ const App = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=user&action=get",
+      "https://api.zontreck.dev/zni/SessionsData.php?var=user&action=get",
       false
     );
     // TODO : Change this to a Promise so the nesting is not as bad to avoid duplicated requests
@@ -90,7 +94,7 @@ const App = (props) => {
     <div class="mainApp">
       <Navbar bg="dark" variant="dark">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Brand href="/">Zontreck.dev - Home of LS Bionics</Navbar.Brand>
+        <Navbar.Brand href="/">Zontreck.dev - Home of ZNI</Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavDropdown title="Account" id="basic-nav-dropdown">
@@ -144,6 +148,38 @@ const App = (props) => {
               path="/account/products/opensim"
               exact
               component={OpenSimManager}
+            />
+
+            <Route
+              path="/account/products/cah_manager"
+              exact
+              render={(props) => {
+                return <CAHManagerView {...props} />;
+              }}
+            />
+
+            <Route
+              path="/account/products/cah_manager/:deckName"
+              exact
+              render={(props) => {
+                return <CAHDeckEditorView {...props} />;
+              }}
+            />
+
+            <Route
+              path="/account/products/cah_manager/:deckName/script"
+              exact
+              render={(props) => {
+                return <CAHDeckScriptView {...props} />;
+              }}
+            />
+
+            <Route
+              path="/account/products/cah_manager/:deckName/edit/:cardID"
+              exact
+              render={(props) => {
+                return <CAHCardEditorView {...props} />;
+              }}
             />
           </>
         </Router>

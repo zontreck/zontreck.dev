@@ -12,23 +12,20 @@ import {
 import { useToasts } from "react-toast-notifications";
 import Search from "./Search.js";
 import ProductsTab from "./ProductsTab.js";
-import {Memory} from "./MemorySingleton.js";
-
-
+import { Memory } from "./MemorySingleton.js";
 
 const AccountPage = (props) => {
   // Grab the user name, and level from the session data.
   const { addToast } = useToasts();
   const [UserName, setUser] = useState("");
-  const [Level, setLevel] = useState(-1);
+  const [Level, setLevel] = useState(-2);
   const unixTime = () => {
     return Math.floor(Date.now() / 1000);
   };
   const [notifMaker, setNotifMaker] = useState(false);
   const toggleNotificationModal = () => setNotifMaker(!notifMaker);
   const [impersonate, setImpersonate] = useState(false);
-const mem = new Memory();
-
+  const mem = new Memory();
 
   var tmpUser = "";
   var xhr = new XMLHttpRequest();
@@ -46,7 +43,7 @@ const mem = new Memory();
               setImpersonate(true);
             }, 2500);
           }
-          mem.Impersonate=impersonate;
+          mem.Impersonate = impersonate;
           setUser(mem.User);
           setLevel(mem.Level);
         }
@@ -59,7 +56,7 @@ const mem = new Memory();
           });
           setTimeout(() => {
             setImpersonate(false);
-            mem.Impersonate=false;
+            mem.Impersonate = false;
           }, 5000);
         } else if (data[1] == "3") {
           addToast("Impersonation has ended", {
@@ -68,7 +65,7 @@ const mem = new Memory();
             autoDismissTimeout: 2500,
           });
           setTimeout(() => {
-              mem.Impersonate=false;
+            mem.Impersonate = false;
             window.location = "/account";
           }, 5000);
         }
@@ -76,17 +73,19 @@ const mem = new Memory();
     }
   };
   const rankName = () => {
-    if (Level == 1) return "User";
+    if (Level == -1) return "Account Suspended";
+    else if (Level == 0) return "Account Not Verified";
+    else if (Level == 1) return "User";
     else if (Level == 2) return "Customer";
-    else if (Level == 3) return "LS Support";
-    else if (Level == 4) return "LS Operator";
-    else if (Level == 5) return "LS Owners";
+    else if (Level == 3) return "ZNI Support";
+    else if (Level == 4) return "ZNI Operator";
+    else if (Level == 5) return "ZNI Owners";
   };
   const runSessionFetch = () => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?var=impersonation&action=get",
+      "https://api.zontreck.dev/zni/SessionsData.php?var=impersonation&action=get",
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -97,6 +96,10 @@ const mem = new Memory();
   const toggleDeletePrompt = () => setDeletePrompt(!deletePrompt);
 
   const deleteAction = () => {
+    if (impersonate) {
+      deimpersonate();
+      return;
+    }
     xhr = new XMLHttpRequest();
     addToast(
       "You are being logged out due to your account having been deleted.",
@@ -106,7 +109,7 @@ const mem = new Memory();
     );
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/RegisterAccount.php?ACTION=ResetUser&user=" +
+      "https://api.zontreck.dev/zni/RegisterAccount.php?ACTION=ResetUser&user=" +
         UserName,
       false
     );
@@ -145,7 +148,7 @@ const mem = new Memory();
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/AdminActions.php?type=deimpersonate",
+      "https://api.zontreck.dev/zni/AdminActions.php?type=deimpersonate",
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -158,7 +161,7 @@ const mem = new Memory();
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/MakeNotification.php",
+      "https://api.zontreck.dev/zni/MakeNotification.php",
       false
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -206,7 +209,7 @@ const mem = new Memory();
           <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
           <Breadcrumb.Item active>Account</Breadcrumb.Item>
         </Breadcrumb>
-        {Level == -1 && runSessionFetch()}
+        {Level == -2 && runSessionFetch()}
         <Card style={{ width: "64rem", color: "#00a5a5" }}>
           <Card.Body>
             <Card.Title>{UserName}</Card.Title>
@@ -220,38 +223,43 @@ const mem = new Memory();
                 </Button>
               )}
               <Tabs defaultActiveKey="home">
-                <Tab eventKey="home" title="Home">
-                  <br />
-                  <Table stripped bordered hover variant="dark">
-                    <thead>
-                      <tr>
-                        <th>Description</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Changes user password</td>
-                        <td>
-                          <Button
-                            variant="primary"
-                            href="/account/new_password"
-                          >
-                            Change
-                          </Button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Deletes your account</td>
-                        <td>
-                          <Button variant="danger" onClick={toggleDeletePrompt}>
-                            Delete It
-                          </Button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </Table>
-                </Tab>
+                {Level >= 1 && (
+                  <Tab eventKey="home" title="Home">
+                    <br />
+                    <Table stripped bordered hover variant="dark">
+                      <thead>
+                        <tr>
+                          <th>Description</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Changes user password</td>
+                          <td>
+                            <Button
+                              variant="primary"
+                              href="/account/new_password"
+                            >
+                              Change
+                            </Button>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Deletes your account</td>
+                          <td>
+                            <Button
+                              variant="danger"
+                              onClick={toggleDeletePrompt}
+                            >
+                              Delete It
+                            </Button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </Table>
+                  </Tab>
+                )}
                 {Level >= 2 && (
                   <Tab eventKey="products" title="Products">
                     <br />
@@ -312,7 +320,7 @@ const mem = new Memory();
           <Modal.Body>
             This action will only delete the login data associated with your
             account. If you wish to fully delete your account including all
-            data, you will need to contact LS Bionics Support.
+            data, you will need to contact ZNI Support.
           </Modal.Body>
           <Modal.Footer>
             <Button variant="danger" onClick={toggleDeletePrompt}>

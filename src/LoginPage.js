@@ -20,7 +20,7 @@ const LoginPage = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/LoginAccount.php",
+      "https://api.zontreck.dev/zni/LoginAccount.php",
       true
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

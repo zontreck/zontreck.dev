@@ -16,7 +16,7 @@ const ZDevNotifierCheck = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/CheckNotifications.php?currentTime=" +
+      "https://api.zontreck.dev/zni/CheckNotifications.php?currentTime=" +
         unixTime(),
       false
     );

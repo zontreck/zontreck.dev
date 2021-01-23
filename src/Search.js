@@ -28,7 +28,7 @@ const Search = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/AdminsSearch.php",
+      "https://api.zontreck.dev/zni/AdminsSearch.php",
       false
     );
     var params = "q=" + encodeURI(searchText);
@@ -42,7 +42,7 @@ const Search = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/AdminActions.php?type=impersonate&user=" +
+      "https://api.zontreck.dev/zni/AdminActions.php?type=impersonate&user=" +
         userx +
         "&level=" +
         levelx,

@@ -27,7 +27,7 @@ const ChangePasswordPage = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/ChangeAccountPassword.php",
+      "https://api.zontreck.dev/zni/ChangeAccountPassword.php",
       false
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
