@@ -173,7 +173,7 @@ const RegisterPage = (props) => {
             <Form.Group>
               <b>
                 Note: Your account level will be Level 1. If you require a
-                higher clearance level (ex. LS Bionics Support), please inform
+                higher clearance level (ex. ZNI Support), please inform
                 one of the managers once your account is created.
               </b>
             </Form.Group>

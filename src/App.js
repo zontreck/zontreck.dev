@@ -21,6 +21,7 @@ import CAHManagerView from "./Products/CAHManagerView.js";
 import CAHDeckEditorView from "./Products/CAHDeckEditorView.js";
 import CAHDeckScriptView from "./Products/CAHDeckScriptView";
 import CAHCardEditorView from "./Products/CAHCardEditorView";
+import CAHGameEditView from "./Products/CAHGameEditView";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -157,6 +158,12 @@ const App = (props) => {
                 return <CAHManagerView {...props} />;
               }}
             />
+
+            <Route
+              path="/account/products/cah_manager/_a/games/edit"
+              exact component={CAHGameEditView}
+            />
+
 
             <Route
               path="/account/products/cah_manager/:deckName"

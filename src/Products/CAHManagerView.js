@@ -99,6 +99,22 @@ const CAHManagerView = (props) => {
                   Create New Deck
                 </Button>
               </div>
+              <div
+                style={{
+                  width: "25%",
+                  height: "50%",
+                  position: "absolute",
+                  left: 0,
+                  top: 10,
+                }}
+              >
+                <Button
+                  variant="danger"
+                  href={"/account/products/cah_manager/_a/games/edit"}
+                >
+                  Edit Active Games
+                </Button>
+              </div>
             </Card.Title>
             <Card.Body>
               <br />
