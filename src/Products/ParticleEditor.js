@@ -459,6 +459,13 @@ const ParticleEditor = (props) => {
               </Form.Row>
 
               <Form.Row>
+                <Form.Label sm="2">Target Pos</Form.Label>
+              </Form.Row>
+              <Form.Row>
+                <Form.Label sm="2">Target ID</Form.Label>
+              </Form.Row>
+
+              <Form.Row>
                 <Form.Label sm="2">Ribbon Particles? </Form.Label>
                 <Col sm="1">
                   <Form.Control
@@ -891,9 +898,8 @@ const ParticleEditor = (props) => {
             </Form>
           </Card.Body>
           <Card.Footer>
-            
-            This section contains the synchronization status indicators to and from SL, and any live sync status messages
-
+            This section contains the synchronization status indicators to and
+            from SL, and any live sync status messages
           </Card.Footer>
         </Card>
       </div>
