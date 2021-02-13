@@ -154,7 +154,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/Get_Store.php?name=" +
+      "https://api.zontreck.dev/zni/Get_Store.php?name=" +
         encodeURI(storeName),
       false
     );
@@ -168,7 +168,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/List_DropboxInventory_ByAccount.php?user=" +
+      "https://api.zontreck.dev/zni/List_DropboxInventory_ByAccount.php?user=" +
         encodeURI(storeOwner),
       false
     );
@@ -274,7 +274,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/Save_Product.php",
+      "https://api.zontreck.dev/zni/Save_Product.php",
       false
     );
     var params =
@@ -298,7 +298,7 @@ const StoreProductsView = (props) => {
       encodeURI(storeOwner);
 
     console.log(
-      "POST URL: https://api.zontreck.dev/ls_bionics/Save_Product.php\n\nData: " +
+      "POST URL: https://api.zontreck.dev/zni/Save_Product.php\n\nData: " +
         params
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -366,7 +366,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/Delete_Product.php?id=" + id,
+      "https://api.zontreck.dev/zni/Delete_Product.php?id=" + id,
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -377,7 +377,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/Get_Product.php?id=" + id,
+      "https://api.zontreck.dev/zni/Get_Product.php?id=" + id,
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -388,7 +388,7 @@ const StoreProductsView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/List_Products.php?store=" +
+      "https://api.zontreck.dev/zni/List_Products.php?store=" +
         storeName,
       false
     );

@@ -16,9 +16,9 @@ import { v4 as uuidv4 } from "uuid";
 
 const CAHCardEditorView = (props) => {
   const [downloadDone, setDownloadDone] = useState(false);
-  const [cardColor, setCardColor] = useState("0");
+  const [cardColor, setCardColor] = useState(0);
   const [cardText, setCardText] = useState("");
-  const [cardNum, setCardNum] = useState("0");
+  const [cardNum, setCardNum] = useState(0);
   //const [card, setCardTime] = useState(0);
 
   var xhr = null;
@@ -33,9 +33,9 @@ const CAHCardEditorView = (props) => {
         var datas = xhr.responseText.split(";;");
         if (datas[0] == "Fetch_Card") {
           var data = JSON.parse(datas[1]);
-          setCardColor(data.Color);
+          setCardColor(Number(data.Color));
           setCardText(data.Text);
-          setCardNum(data.Num);
+          setCardNum(Number(data.Num));
           //setCardTime(data.Time);
           setDownloadDone(true);
         }
@@ -51,34 +51,6 @@ const CAHCardEditorView = (props) => {
   };
 
   doDownload();
-
-  const renderCardList = (entry, index) => {
-    var colorStr = "white";
-    if (entry.Color == 0) colorStr = "White";
-    else colorStr = "Black";
-
-    if (entry.Color == 0) entry.Num = 0;
-    return (
-      <tr>
-        <td>{entry.Text}</td>
-        <td>{colorStr}</td>
-        <td>{entry.Num}</td>
-        <td>
-          <Button
-            variant="danger"
-            href={
-              "/account/products/cah_manager/" +
-              props.match.params.deckName +
-              "/edit/" +
-              entry.ID
-            }
-          >
-            Edit Card
-          </Button>
-        </td>
-      </tr>
-    );
-  };
 
   const refresh = () => {
     if (downloadDone) setDownloadDone(false);
@@ -136,6 +108,14 @@ const CAHCardEditorView = (props) => {
     });
     xhr.send(params);
   };
+
+  const renderOpts = (entry, index) => {
+    return (
+      <Button variant="primary" onClick={() => setCardNum(entry)}>
+        {entry}
+      </Button>
+    );
+  };
   return (
     <div>
       <Breadcrumb>
@@ -161,14 +141,14 @@ const CAHCardEditorView = (props) => {
             <Card.Body>
               <div style={{ width: "25vw", height: "50vh" }}>
                 <Card
-                  bg={cardColor === "0" ? "light" : "secondary"}
-                  text={cardColor === "0" ? "black" : "white"}
+                  bg={cardColor === 0 ? "light" : "secondary"}
+                  text={cardColor === 0 ? "black" : "white"}
                   className="mb-2"
                 >
                   <Card.Title>
-                    <pre>
+                    <pre style={{ whiteSpace: "pre-wrap" }}>
                       <font
-                        color={cardColor === "0" ? "black" : "white"}
+                        color={cardColor === 0 ? "black" : "white"}
                         size="6"
                       >
                         {downloadDone && cardText.substr(0, 128)}
@@ -177,34 +157,37 @@ const CAHCardEditorView = (props) => {
                   </Card.Title>
                   <Card.Body>
                     <pre>
-                      <font color={cardColor === "0" ? "black" : "white"}>
+                      <font color={cardColor === 0 ? "black" : "white"}>
                         {downloadDone &&
-                          (cardColor === "0"
+                          (cardColor === 0
                             ? "Cards Against Humanity"
                             : "Draw (" + cardNum + ")\nPick (" + cardNum + ")")}
                       </font>
                     </pre>
                   </Card.Body>
                   <Card.Footer>
-                    <font color={cardColor === "0" ? "black" : "white"}>
+                    <font color={cardColor === 0 ? "black" : "white"}>
                       <Form.Row>
                         <Form.Label sm="2">Card Color: </Form.Label>
                         <Col sm="6">
-                          <Form.Control
-                            type="number"
-                            value={cardColor}
-                            onChange={(e) => setCardColor(e.target.value)}
-                          ></Form.Control>
+                          <Button
+                            variant="light"
+                            onClick={() => setCardColor(0)}
+                          >
+                            WHITE
+                          </Button>{" "}
+                          <Button
+                            variant="dark"
+                            onClick={() => setCardColor(1)}
+                          >
+                            BLACK
+                          </Button>
                         </Col>
                       </Form.Row>
                       <Form.Row>
                         <Form.Label sm="2">Card Draw Count: </Form.Label>
                         <Col sm="6">
-                          <Form.Control
-                            type="number"
-                            value={cardNum}
-                            onChange={(e) => setCardNum(e.target.value)}
-                          ></Form.Control>
+                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(renderOpts)}
                         </Col>
                       </Form.Row>
                       <Form.Row>

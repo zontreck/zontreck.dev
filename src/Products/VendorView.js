@@ -100,7 +100,7 @@ const VendorView = (props) => {
           xhr = new XMLHttpRequest();
           xhr.open(
             "POST",
-            "https://api.zontreck.dev/ls_bionics/RelayHTTP.php",
+            "https://api.zontreck.dev/zni/RelayHTTP.php",
             false
           );
           var para =
@@ -136,7 +136,7 @@ const VendorView = (props) => {
             xhr = new XMLHttpRequest();
             xhr.open(
               "POST",
-              "https://api.zontreck.dev/ls_bionics/RelayHTTP.php",
+              "https://api.zontreck.dev/zni/RelayHTTP.php",
               false
             );
             var params =
@@ -162,7 +162,7 @@ const VendorView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/Get_Store.php?name=" + storeName,
+      "https://api.zontreck.dev/zni/Get_Store.php?name=" + storeName,
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -182,7 +182,7 @@ const VendorView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/List_Products.php?store=" +
+      "https://api.zontreck.dev/zni/List_Products.php?store=" +
         encodeURI(storeName),
       false
     );
@@ -198,7 +198,7 @@ const VendorView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/List_Vendors_ByStore.php?store=" +
+      "https://api.zontreck.dev/zni/List_Vendors_ByStore.php?store=" +
         encodeURI(storeName),
       false
     );
@@ -284,7 +284,7 @@ const VendorView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/Update_Vendor_WithConfig.php",
+      "https://api.zontreck.dev/zni/Update_Vendor_WithConfig.php",
       false
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -314,7 +314,7 @@ const VendorView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?action=get&var=user",
+      "https://api.zontreck.dev/zni/SessionsData.php?action=get&var=user",
       false
     );
     xhr.addEventListener("load", processHTTP);

@@ -277,7 +277,7 @@ const AccountPage = (props) => {
                     <br />
                     <strong>
                       This tool allows you to perform various operator actions
-                      on the LS Bionics website. Please use caution.
+                      on the ZNI website. Please use caution.
                     </strong>
                     <br />
                     <Table stripped bordered hover variant="dark">

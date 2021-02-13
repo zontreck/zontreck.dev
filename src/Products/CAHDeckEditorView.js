@@ -74,9 +74,9 @@ const CAHDeckEditorView = (props) => {
     doDownload();
   };
 
-  const newID = () =>{
-      return uuidv4();
-  }
+  const newID = () => {
+    return uuidv4();
+  };
   return (
     <div>
       <Breadcrumb>
@@ -92,7 +92,9 @@ const CAHDeckEditorView = (props) => {
         <div style={{ width: "75vw", height: "50vh" }}>
           <Card className="bg-dark text-white">
             <Card.Title>
-              {props.match.params.deckName} - Editor
+              {props.match.params.deckName} - Editor -{" "}
+              {!downloadDone && refresh()}
+              {downloadDone && cardList.length} Total Cards
               <Button
                 variant="primary"
                 style={{ position: "absolute", right: 5, top: 5 }}

@@ -22,6 +22,9 @@ import CAHDeckEditorView from "./Products/CAHDeckEditorView.js";
 import CAHDeckScriptView from "./Products/CAHDeckScriptView";
 import CAHCardEditorView from "./Products/CAHCardEditorView";
 import CAHGameEditView from "./Products/CAHGameEditView";
+import CAHGameEditorView from "./Products/CAHGameEditorView";
+import ParticleEditorView from "./Products/ParticleEditorView1.js";
+import ParticleEditor from "./Products/ParticleEditor.js";
 
 const App = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -152,6 +155,12 @@ const App = (props) => {
             />
 
             <Route
+              path="/account/products/particle"
+              exact
+              component={ParticleEditorView}
+            />
+
+            <Route
               path="/account/products/cah_manager"
               exact
               render={(props) => {
@@ -161,9 +170,17 @@ const App = (props) => {
 
             <Route
               path="/account/products/cah_manager/_a/games/edit"
-              exact component={CAHGameEditView}
+              exact
+              component={CAHGameEditView}
             />
 
+            <Route
+              path="/account/products/cah_manager/_a/games/edit/:tableID"
+              exact
+              render={(props) => {
+                return <CAHGameEditorView {...props} />;
+              }}
+            />
 
             <Route
               path="/account/products/cah_manager/:deckName"
@@ -186,6 +203,14 @@ const App = (props) => {
               exact
               render={(props) => {
                 return <CAHCardEditorView {...props} />;
+              }}
+            />
+
+            <Route
+              path="/account/products/particle/:url"
+              exact
+              render={(props) => {
+                return <ParticleEditor {...props} />;
               }}
             />
           </>

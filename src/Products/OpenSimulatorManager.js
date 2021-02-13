@@ -42,7 +42,7 @@ const OpenSimManager = (props) => {
     var xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/OpenSim/Register.php",
+      "https://api.zontreck.dev/zni/OpenSim/Register.php",
       false
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

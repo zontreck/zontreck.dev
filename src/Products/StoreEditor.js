@@ -108,7 +108,7 @@ const StoreEditor = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/SessionsData.php?action=get&var=user",
+      "https://api.zontreck.dev/zni/SessionsData.php?action=get&var=user",
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -123,7 +123,7 @@ const StoreEditor = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "GET",
-      "https://api.zontreck.dev/ls_bionics/Get_Store.php?name=" +
+      "https://api.zontreck.dev/zni/Get_Store.php?name=" +
         encodeURI(storeName),
       false
     );
@@ -164,7 +164,7 @@ const StoreEditor = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/Delete_Store.php",
+      "https://api.zontreck.dev/zni/Delete_Store.php",
       false
     );
     xhr.addEventListener("load", processHTTP);
@@ -181,7 +181,7 @@ const StoreEditor = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open(
       "POST",
-      "https://api.zontreck.dev/ls_bionics/Save_Store.php",
+      "https://api.zontreck.dev/zni/Save_Store.php",
       false
     );
     xhr.addEventListener("load", processHTTP);
