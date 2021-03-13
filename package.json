@@ -16,7 +16,7 @@
     "react-scripts": "^4.0.2",
     "react-toast-notifications": "^2.4.3",
     "uuid": "^8.3.2",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
