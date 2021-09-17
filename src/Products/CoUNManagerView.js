@@ -4,7 +4,6 @@ import {
   Button,
   Form,
   Card,
-  Breadcrumb,
   Modal,
   Col,
   Table,
@@ -87,7 +86,7 @@ const CoUNManagerView = (props) => {
             (entry.Type == 0 && "Default / Publicly Available")}
         </td>
         <td>
-          <Button href={"/account/products/coun_manager/" + entry.ID}>
+          <Button href={"/account/products/coun_manager/" + entry.Name}>
             Edit
           </Button>
         </td>
@@ -108,7 +107,7 @@ const CoUNManagerView = (props) => {
               <div
                 style={{
                   width: "25%",
-                  height: "50%",
+                  height: "10%",
                   position: "absolute",
                   right: 0,
                   top: 10,
@@ -121,7 +120,7 @@ const CoUNManagerView = (props) => {
               <div
                 style={{
                   width: "25%",
-                  height: "50%",
+                  height: "10%",
                   position: "absolute",
                   left: 0,
                   top: 10,
@@ -132,6 +131,22 @@ const CoUNManagerView = (props) => {
                   href={"/account/products/coun_manager/_a/games/edit"}
                 >
                   Edit Active Games
+                </Button>
+              </div>
+              <div
+                style={{
+                  width: "25%",
+                  height: "10%",
+                  position: "absolute",
+                  left: "0%",
+                  top: 50,
+                }}
+              >
+                <Button
+                  variant="danger"
+                  href={"/account/products/coun_manager/_a/cards/edit"}
+                >
+                  Card Database
                 </Button>
               </div>
             </Card.Title>

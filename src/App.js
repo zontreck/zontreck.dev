@@ -18,7 +18,7 @@ import VendorView from "./Products/VendorView.js";
 import OpenSimManager from "./Products/OpenSimulatorManager.js";
 import { Memory } from "./MemorySingleton.js";
 import CoUNManagerView from "./Products/CoUNManagerView.js";
-import CAHDeckEditorView from "./Products/CAHDeckEditorView.js";
+import CoUNDeckEditorView from "./Products/CoUNDeckEditorView.js";
 import CAHDeckScriptView from "./Products/CAHDeckScriptView";
 import CAHCardEditorView from "./Products/CAHCardEditorView";
 import CAHGameEditView from "./Products/CAHGameEditView";
@@ -183,10 +183,10 @@ const App = (props) => {
             />
 
             <Route
-              path="/account/products/cah_manager/:deckName"
+              path="/account/products/coun_manager/:deckName"
               exact
               render={(props) => {
-                return <CAHDeckEditorView {...props} />;
+                return <CoUNDeckEditorView {...props} />;
               }}
             />
 

@@ -4,7 +4,6 @@ import {
   Button,
   Form,
   Card,
-  Breadcrumb,
   Modal,
   Col,
   Table,
@@ -14,7 +13,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { v4 as uuidv4 } from "uuid";
 
-const CAHDeckEditorView = (props) => {
+const CoUNDeckEditorView = (props) => {
   const [downloadDone, setDownloadDone] = useState(false);
   const [cardList, setCardList] = useState([]);
 
@@ -23,40 +22,46 @@ const CAHDeckEditorView = (props) => {
     if (downloadDone) return;
 
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.zontreck.dev/zni/Modify_Card.php");
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
-        var datas = xhr.responseText.split(";;");
+        var datas = xhr.responseText;
+        setCardList(JSON.parse(datas));
+        setDownloadDone(true);
+        /*.split(";;");
         if (datas[0] == "List_Cards") {
           setCardList(JSON.parse(datas[1]));
           setDownloadDone(true);
-        }
+        }*/
       }
     });
+    var tmp_notation = {};
+    tmp_notation.type = "ListCards";
+    tmp_notation.deck = props.match.params.deckName;
+    var params = JSON.stringify(tmp_notation);
 
-    var params = "TYPE_OVERRIDE=LIST_CARDS&DECK=" + props.match.params.deckName;
     xhr.send(params);
   };
 
   doDownload();
 
   const renderCardList = (entry, index) => {
-    var colorStr = "white";
-    if (entry.Color == 0) colorStr = "White";
-    else colorStr = "Black";
+    var colorStr = "Answer";
+    if (entry.Color == 0) colorStr = "Answer";
+    else colorStr = "Question";
 
-    if (entry.Color == 0) entry.Num = 0;
+    if (entry.Color == 0) entry.Draw = 0;
     return (
       <tr>
         <td>{entry.Text}</td>
         <td>{colorStr}</td>
-        <td>{entry.Num}</td>
+        <td>{entry.Draw}</td>
         <td>
           <Button
             variant="danger"
             href={
-              "/account/products/cah_manager/" +
+              "/account/products/coun_manager/" +
               props.match.params.deckName +
               "/edit/" +
               entry.ID
@@ -79,15 +84,6 @@ const CAHDeckEditorView = (props) => {
   };
   return (
     <div>
-      <Breadcrumb>
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/account">Account</Breadcrumb.Item>
-        <Breadcrumb.Item disabled>Products</Breadcrumb.Item>
-        <Breadcrumb.Item href="/account/products/cah_manager">
-          Cards Against Humanity
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>{props.match.params.deckName}</Breadcrumb.Item>
-      </Breadcrumb>
       <center>
         <div style={{ width: "75vw", height: "50vh" }}>
           <Card className="bg-dark text-white">
@@ -134,4 +130,4 @@ const CAHDeckEditorView = (props) => {
   );
 };
 
-export default CAHDeckEditorView;
+export default CoUNDeckEditorView;
