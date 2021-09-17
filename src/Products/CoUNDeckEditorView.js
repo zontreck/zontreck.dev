@@ -91,18 +91,6 @@ const CoUNDeckEditorView = (props) => {
               {props.match.params.deckName} - Editor -{" "}
               {!downloadDone && refresh()}
               {downloadDone && cardList.length} Total Cards
-              <Button
-                variant="primary"
-                style={{ position: "absolute", right: 5, top: 5 }}
-                href={
-                  "/account/products/coun_manager/" +
-                  props.match.params.deckName +
-                  "/edit/" +
-                  newID()
-                }
-              >
-                New Card
-              </Button>
             </Card.Title>
             <Card.Body>
               * Note: This will only list the cards presently in the deck. The

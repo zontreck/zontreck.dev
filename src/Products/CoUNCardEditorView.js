@@ -73,6 +73,8 @@ const CoUNCardEditorView = (props) => {
         if (xhr.responseText === "OK") {
           window.location =
             "/account/products/coun_manager/" + props.match.params.deckName;
+        } else{
+          alert("ERROR when saving the card: "+xhr.responseText);
         }
       }
     });
@@ -82,19 +84,19 @@ const CoUNCardEditorView = (props) => {
 
   const deleteCard = () => {
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.zontreck.dev/zni/Modify_Card.php");
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var params =
-      "DECK=" +
-      props.match.params.deckName +
-      "&CARD_ID=" +
-      props.match.params.cardID +
-      "&TYPE_OVERRIDE=DELETE";
+    var tmp_notation = {};
+    tmp_notation.type = "UnlinkCard";
+    tmp_notation.deck = props.match.params.deckName;
+    tmp_notation.card = props.match.params.cardID;
+
+    var params = JSON.stringify(tmp_notation);
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
-        if (xhr.responseText === "Modify_Card;;ok;delete") {
+        if (xhr.responseText === "OK") {
           window.location =
-            "/account/products/cah_manager/" + props.match.params.deckName;
+            "/account/products/coun_manager/" + props.match.params.deckName;
         }
       }
     });
@@ -180,7 +182,7 @@ const CoUNCardEditorView = (props) => {
                           Confirm Changes
                         </Button>{" "}
                         <Button variant="danger" onClick={deleteCard}>
-                          Delete this card
+                          Unlink this card
                         </Button>
                         <br />* NOTE * : Deleting a card will only unlink it
                         from this deck
