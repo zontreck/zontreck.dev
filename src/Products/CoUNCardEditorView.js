@@ -63,7 +63,7 @@ const CoUNCardEditorView = (props) => {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     var tmp_notation = {};
     tmp_notation.type = "UpdateCard";
-    tmp_notation.Text = cardText;
+    tmp_notation.Text = cardText.toString('base64');
     tmp_notation.Color=cardColor;
     tmp_notation.Draw = cardNum;
 
