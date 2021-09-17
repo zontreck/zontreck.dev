@@ -81,14 +81,14 @@ const RegisterPage = (props) => {
           <Form>
             <Form.Row></Form.Row>
             <Form.Group>
-              <Form.Label>SL Username</Form.Label>
+              <Form.Label>SL Username (first.last format!)</Form.Label>
 
               <Form.Control
                 type="text"
                 size="sm"
                 id="sl_username"
                 onChange={handleUser}
-                placeholder="Abcde Resident"
+                placeholder="abcde.resident"
                 value={username}
               />
             </Form.Group>
