@@ -30,17 +30,18 @@ const CoUNManagerView = (props) => {
 
     setDownloadDone(true);
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.zontreck.dev/zni/Modify_Card.php");
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
-        var data = xhr.responseText.split(";;");
-        if (data[0] == "List_Decks") {
-          setDecks(data[1].split("~"));
-        }
+        var data = xhr.responseText;
+        var notation = JSON.parse(data);
+        setDecks(notation);
       }
     });
-    var params = "TYPE_OVERRIDE=LIST_DECKS";
+    var tmp_notation;
+    tmp_notation.type = "ListAllDecks";
+    var params = JSON.stringify(tmp_notation);
 
     xhr.send(params);
   };
@@ -56,7 +57,9 @@ const CoUNManagerView = (props) => {
     // Renders the deck list!
     return (
       <tr>
-        <td>{entry}</td>
+        <td>{entry.Name}</td>
+        <td>{entry.Owner}</td>
+        <td>{entry.Type}</td>
         <td>
           <Button href={"/account/products/coun_manager/" + entry}>Edit</Button>{" "}
           <Button
@@ -116,6 +119,8 @@ const CoUNManagerView = (props) => {
                 <thead>
                   <tr>
                     <th>Deck Name</th>
+                    <th>Deck Owner</th>
+                    <th>Deck Type</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
