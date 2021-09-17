@@ -77,7 +77,7 @@ const AccountPage = (props) => {
     else if (Level == 1) return "User";
     else if (Level == 2) return "Customer";
     else if (Level == 3) return "ZNI Support";
-    else if (Level == 4) return "ZNI Operator";
+    else if (Level == 4) return "ZNI Contributor";
     else if (Level == 5) return "ZNI Owners";
   };
   const runSessionFetch = () => {

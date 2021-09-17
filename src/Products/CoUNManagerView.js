@@ -39,7 +39,7 @@ const CoUNManagerView = (props) => {
         setDecks(notation);
       }
     });
-    var tmp_notation;
+    var tmp_notation = {};
     tmp_notation.type = "ListAllDecks";
     var params = JSON.stringify(tmp_notation);
 
@@ -51,6 +51,28 @@ const CoUNManagerView = (props) => {
     doDownload();
   };
 
+  const doMakeDeck = () => {
+    xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.addEventListener("load", ()=>{
+      if(xhr.readyState === 4){
+        var data = xhr.responseText;
+        if(data == "CAHv2Decks;;OK;"){
+          setNewDeck(false);
+          refresh();
+        }
+      }
+    });
+    var tmp_notation={};
+    tmp_notation.type = "MakeDeck";
+    tmp_notation.user = mem.User;
+    tmp_notation.deck = newDeckName;
+    var params = JSON.stringify(tmp_notation);
+
+    xhr.send(params);
+  }
+
   doDownload();
 
   const renderDecks = (entry, index) => {
@@ -59,7 +81,11 @@ const CoUNManagerView = (props) => {
       <tr>
         <td>{entry.Name}</td>
         <td>{entry.Owner}</td>
-        <td>{entry.Type}</td>
+        <td>
+          {(entry.Type == 2 && "Table Deck") ||
+            (entry.Type == 1 && "In-Prog Deck") ||
+            (entry.Type == 0 && "Default / Publicly Available")}
+        </td>
         <td>
           <Button href={"/account/products/coun_manager/" + entry}>Edit</Button>{" "}
           <Button
@@ -152,20 +178,26 @@ const CoUNManagerView = (props) => {
                 </Form.Row>
                 <Form.Row>
                   <Form.Label sm="2">
-                    * NOTE * This deck will not be saved yet after clicking
-                    submit, you will be forwarded to the deck editor, after
-                    creating at least one card, it will appear in the table on
-                    the Deck List
+                    * NOTE * <br />
+                    This deck will be created but may have no cards. You will
+                    need to open the deck's editor to add cards.
+                    <br />
+                    <br />
+                    The deck will be assigned as a In-Prog deck by default as it
+                    cannot be a table deck, nor an official deck.
+                    <br />
+                    <br />
+                    Only developer clearance can modify this value
                   </Form.Label>
                 </Form.Row>
               </Form>
             </Modal.Body>
             <Modal.Footer>
               <Button
-                href={"/account/products/coun_manager/" + newDeckName}
                 variant="success"
+                onClick={doMakeDeck}
               >
-                Edit
+                Create
               </Button>{" "}
               <Button onClick={newDeck} variant="danger">
                 Cancel
