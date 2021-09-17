@@ -26,15 +26,6 @@ const ProductsTab = (props) => {
             </td>
           </tr>
           <tr>
-            <td>OpenSimulator</td>
-            <td>Account Management for OpenSim</td>
-            <td>
-              <Button href="/account/products/opensim" variant="primary">
-                View
-              </Button>
-            </td>
-          </tr>
-          <tr>
             <td>Particle Editor</td>
             <td>
               Interactive particle editor, inspired by Schmobag Hogfather's
@@ -48,10 +39,10 @@ const ProductsTab = (props) => {
           </tr>
           {mem.Level >= 3 && (
             <tr>
-              <td>Cards Against Humanity</td>
-              <td>Card Creation Tool for Admins</td>
+              <td>Cards of Utter Nonsense</td>
+              <td>CoUN Manager</td>
               <td>
-                <Button href="/account/products/cah_manager" variant="primary">
+                <Button href="/account/products/coun_manager" variant="primary">
                   View
                 </Button>
               </td>

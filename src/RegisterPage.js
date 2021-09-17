@@ -7,8 +7,6 @@ const RegisterPage = (props) => {
   const { addToast } = useToasts();
   const [modal, setModal] = useState(true);
   const [username, setUser] = useState("");
-  const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
   const [password, setPass] = useState("");
   const toggle = () => {
     setModal(!modal);
@@ -18,14 +16,6 @@ const RegisterPage = (props) => {
     setUser(event.target.value);
   };
 
-  const handleEmail = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleToken = (event) => {
-    setToken(event.target.value);
-  };
-
   const handlePass = (event) => {
     setPass(event.target.value);
   };
@@ -33,21 +23,9 @@ const RegisterPage = (props) => {
   const submitAction = () => {
     console.log("Registering account...");
     var xhr = new XMLHttpRequest();
-    xhr.open(
-      "POST",
-      "https://api.zontreck.dev/zni/RegisterAccount.php",
-      true
-    );
+    xhr.open("POST", "https://api.zontreck.dev/zni/RegisterAccount.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var params =
-      "user=" +
-      username +
-      "&email=" +
-      email +
-      "&token=" +
-      token +
-      "&pwd=" +
-      password;
+    var params = "user=" + username + "&pwd=" + password;
     xhr.addEventListener("load", () => {
       console.log("Ready state has changed. New state: " + xhr.readyState);
       if (xhr.readyState === 4) {
@@ -79,21 +57,6 @@ const RegisterPage = (props) => {
               autoDismiss: true,
               autoDismissTimeout: 5000,
             });
-          } else if (data[1] == "2") {
-            toggle();
-            console.log("No token");
-            addToast("You must request a authorization token from our store.", {
-              appearance: "error",
-              autoDismiss: true,
-              autoDismissTimeout: 5000,
-            });
-          } else if (data[1] == "3") {
-            console.log("Error, token invalid");
-            addToast("Your token does not match our records", {
-              appearance: "error",
-              autoDismiss: true,
-              autoDismissTimeout: 5000,
-            });
           }
         }
       } else {
@@ -116,12 +79,7 @@ const RegisterPage = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Row>
-              <h3>
-                Note that registration for a Zontreck.dev account requires that
-                you requested this action from in-world.
-              </h3>
-            </Form.Row>
+            <Form.Row></Form.Row>
             <Form.Group>
               <Form.Label>SL Username</Form.Label>
 
@@ -134,31 +92,7 @@ const RegisterPage = (props) => {
                 value={username}
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Email</Form.Label>
 
-              <Form.Control
-                type="email"
-                id="sl_email"
-                onChange={handleEmail}
-                placeholder="user@email.net"
-                value={email}
-              />
-              <Form.Text className="text-muted">
-                We will never share your email with anyone
-              </Form.Text>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Auth Token</Form.Label>
-
-              <Form.Control
-                type="text"
-                id="sl_auth"
-                onChange={handleToken}
-                placeholder="Authorization Token"
-                value={token}
-              />
-            </Form.Group>
             <Form.Group>
               <Form.Label>Password</Form.Label>
 
@@ -173,8 +107,8 @@ const RegisterPage = (props) => {
             <Form.Group>
               <b>
                 Note: Your account level will be Level 1. If you require a
-                higher clearance level (ex. ZNI Support), please inform
-                one of the managers once your account is created.
+                higher clearance level (ex. ZNI Support), please inform one of
+                the managers once your account is created.
               </b>
             </Form.Group>
           </Form>

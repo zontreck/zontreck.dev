@@ -14,7 +14,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { v4 as uuidv4 } from "uuid";
 
-const CAHManagerView = (props) => {
+const CoUNManagerView = (props) => {
   const mem = new Memory();
   const newDeck = () => {
     setNewDeck(!newDeckx);
@@ -58,9 +58,9 @@ const CAHManagerView = (props) => {
       <tr>
         <td>{entry}</td>
         <td>
-          <Button href={"/account/products/cah_manager/" + entry}>Edit</Button>{" "}
+          <Button href={"/account/products/coun_manager/" + entry}>Edit</Button>{" "}
           <Button
-            href={"/account/products/cah_manager/" + entry + "/script"}
+            href={"/account/products/coun_manager/" + entry + "/script"}
             variant="danger"
           >
             Get Script
@@ -76,14 +76,14 @@ const CAHManagerView = (props) => {
         <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
         <Breadcrumb.Item href="/account">Account</Breadcrumb.Item>
         <Breadcrumb.Item disabled>Products</Breadcrumb.Item>
-        <Breadcrumb.Item active>Cards Against Humanity</Breadcrumb.Item>
+        <Breadcrumb.Item active>Cards of Utter Nonsense</Breadcrumb.Item>
       </Breadcrumb>
       <center>
         <br />
         <div style={{ width: "50vw", height: "50vh" }}>
           <Card className="bg-dark text-white">
             <Card.Title>
-              Cards Against Humanity - ZNI Edition
+              Cards of Utter Nonsense - ZNI Edition
               <br />
               Administrative Console
               <div
@@ -110,7 +110,7 @@ const CAHManagerView = (props) => {
               >
                 <Button
                   variant="danger"
-                  href={"/account/products/cah_manager/_a/games/edit"}
+                  href={"/account/products/coun_manager/_a/games/edit"}
                 >
                   Edit Active Games
                 </Button>
@@ -163,7 +163,7 @@ const CAHManagerView = (props) => {
             </Modal.Body>
             <Modal.Footer>
               <Button
-                href={"/account/products/cah_manager/" + newDeckName}
+                href={"/account/products/coun_manager/" + newDeckName}
                 variant="success"
               >
                 Edit
@@ -179,4 +179,4 @@ const CAHManagerView = (props) => {
   );
 };
 
-export default CAHManagerView;
+export default CoUNManagerView;
