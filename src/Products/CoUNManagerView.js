@@ -55,23 +55,23 @@ const CoUNManagerView = (props) => {
     xhr = new XMLHttpRequest();
     xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.addEventListener("load", ()=>{
-      if(xhr.readyState === 4){
+    xhr.addEventListener("load", () => {
+      if (xhr.readyState === 4) {
         var data = xhr.responseText;
-        if(data == "CAHv2Decks;;OK;"){
+        if (data == "CAHv2Decks;;OK;") {
           setNewDeck(false);
           refresh();
         }
       }
     });
-    var tmp_notation={};
+    var tmp_notation = {};
     tmp_notation.type = "MakeDeck";
     tmp_notation.user = mem.User;
     tmp_notation.deck = newDeckName;
     var params = JSON.stringify(tmp_notation);
 
     xhr.send(params);
-  }
+  };
 
   doDownload();
 
@@ -87,12 +87,8 @@ const CoUNManagerView = (props) => {
             (entry.Type == 0 && "Default / Publicly Available")}
         </td>
         <td>
-          <Button href={"/account/products/coun_manager/" + entry}>Edit</Button>{" "}
-          <Button
-            href={"/account/products/coun_manager/" + entry + "/script"}
-            variant="danger"
-          >
-            Get Script
+          <Button href={"/account/products/coun_manager/" + entry.ID}>
+            Edit
           </Button>
         </td>
       </tr>
@@ -193,10 +189,7 @@ const CoUNManagerView = (props) => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button
-                variant="success"
-                onClick={doMakeDeck}
-              >
+              <Button variant="success" onClick={doMakeDeck}>
                 Create
               </Button>{" "}
               <Button onClick={newDeck} variant="danger">
