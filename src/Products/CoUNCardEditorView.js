@@ -14,7 +14,7 @@ import {
 import { useToasts } from "react-toast-notifications";
 import { v4 as uuidv4 } from "uuid";
 
-const CAHCardEditorView = (props) => {
+const CoUNCardEditorView = (props) => {
   const [downloadDone, setDownloadDone] = useState(false);
   const [cardColor, setCardColor] = useState(0);
   const [cardText, setCardText] = useState("");
@@ -26,27 +26,23 @@ const CAHCardEditorView = (props) => {
     if (downloadDone) return;
 
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.zontreck.dev/zni/Modify_Card.php");
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
-        var datas = xhr.responseText.split(";;");
-        if (datas[0] == "Fetch_Card") {
-          var data = JSON.parse(datas[1]);
-          setCardColor(Number(data.Color));
-          setCardText(data.Text);
-          setCardNum(Number(data.Num));
-          //setCardTime(data.Time);
-          setDownloadDone(true);
-        }
+        var datas = xhr.responseText;
+        var DX = JSON.parse(datas);
+        setCardColor(Number(DX.Color));
+        setCardText(DX.Text);
+        setCardNum(Number(DX.Draw));
+        setDownloadDone(true);
       }
     });
+    var tmp_notation = {};
+    tmp_notation.type = "RetrieveCard";
+    tmp_notation.ID = props.match.params.cardID;
 
-    var params =
-      "TYPE_OVERRIDE=FETCH&DECK=" +
-      props.match.params.deckName +
-      "&CARD_ID=" +
-      props.match.params.cardID;
+    var params = JSON.stringify(tmp_notation);
     xhr.send(params);
   };
 
@@ -63,24 +59,20 @@ const CAHCardEditorView = (props) => {
 
   const uploadCard = () => {
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://api.zontreck.dev/zni/Modify_Card.php");
+    xhr.open("POST", "https://api.zontreck.dev/zni/CAH_v2_Decks.php");
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    var params =
-      "DECK=" +
-      props.match.params.deckName +
-      "&CARD_ID=" +
-      props.match.params.cardID +
-      "&CARD_TEXT=" +
-      btoa(cardText) +
-      "&COLOR=" +
-      cardColor +
-      "&DRAW_COUNT=" +
-      cardNum;
+    var tmp_notation = {};
+    tmp_notation.type = "UpdateCard";
+    tmp_notation.Text = cardText;
+    tmp_notation.Color=cardColor;
+    tmp_notation.Draw = cardNum;
+
+    var params = JSON.stringify(tmp_notation);
     xhr.addEventListener("load", () => {
       if (xhr.readyState === 4) {
-        if (xhr.responseText === "Modify_Card;;ok;update") {
+        if (xhr.responseText === "OK") {
           window.location =
-            "/account/products/cah_manager/" + props.match.params.deckName;
+            "/account/products/coun_manager/" + props.match.params.deckName;
         }
       }
     });
@@ -118,22 +110,6 @@ const CAHCardEditorView = (props) => {
   };
   return (
     <div>
-      <Breadcrumb>
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/account">Account</Breadcrumb.Item>
-        <Breadcrumb.Item disabled>Products</Breadcrumb.Item>
-        <Breadcrumb.Item href="/account/products/cah_manager">
-          Cards Against Humanity
-        </Breadcrumb.Item>
-        <Breadcrumb.Item
-          href={"/account/products/cah_manager/" + props.match.params.deckName}
-        >
-          {props.match.params.deckName}
-        </Breadcrumb.Item>
-        <Breadcrumb.Item active>
-          Card Edit - {props.match.params.cardID}
-        </Breadcrumb.Item>
-      </Breadcrumb>
       <center>
         <div style={{ width: "75vw", height: "50vh" }}>
           <Card className="bg-dark text-white">
@@ -160,7 +136,7 @@ const CAHCardEditorView = (props) => {
                       <font color={cardColor === 0 ? "black" : "white"}>
                         {downloadDone &&
                           (cardColor === 0
-                            ? "Cards Against Humanity"
+                            ? "Cards of Utter Nonsense"
                             : "Draw (" + cardNum + ")\nPick (" + cardNum + ")")}
                       </font>
                     </pre>
@@ -174,21 +150,19 @@ const CAHCardEditorView = (props) => {
                             variant="light"
                             onClick={() => setCardColor(0)}
                           >
-                            WHITE
+                            ANSWER
                           </Button>{" "}
                           <Button
                             variant="dark"
                             onClick={() => setCardColor(1)}
                           >
-                            BLACK
+                            QUESTION
                           </Button>
                         </Col>
                       </Form.Row>
                       <Form.Row>
                         <Form.Label sm="2">Card Draw Count: </Form.Label>
-                        <Col sm="6">
-                          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(renderOpts)}
-                        </Col>
+                        <Col sm="6">{[0, 1, 2, 3, 4].map(renderOpts)}</Col>
                       </Form.Row>
                       <Form.Row>
                         <Form.Label sm="2">Card Text: </Form.Label>
@@ -208,6 +182,10 @@ const CAHCardEditorView = (props) => {
                         <Button variant="danger" onClick={deleteCard}>
                           Delete this card
                         </Button>
+                        <br />* NOTE * : Deleting a card will only unlink it
+                        from this deck
+                        <br />* NOTE * : Be careful when editing a card if it
+                        resides in more than 1 deck!
                       </Form.Row>
                     </font>
                   </Card.Footer>
@@ -221,4 +199,4 @@ const CAHCardEditorView = (props) => {
   );
 };
 
-export default CAHCardEditorView;
+export default CoUNCardEditorView;

@@ -95,7 +95,7 @@ const CoUNDeckEditorView = (props) => {
                 variant="primary"
                 style={{ position: "absolute", right: 5, top: 5 }}
                 href={
-                  "/account/products/cah_manager/" +
+                  "/account/products/coun_manager/" +
                   props.match.params.deckName +
                   "/edit/" +
                   newID()

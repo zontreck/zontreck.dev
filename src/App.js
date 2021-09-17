@@ -20,7 +20,7 @@ import { Memory } from "./MemorySingleton.js";
 import CoUNManagerView from "./Products/CoUNManagerView.js";
 import CoUNDeckEditorView from "./Products/CoUNDeckEditorView.js";
 import CAHDeckScriptView from "./Products/CAHDeckScriptView";
-import CAHCardEditorView from "./Products/CAHCardEditorView";
+import CoUNCardEditorView from "./Products/CoUNCardEditorView";
 import CAHGameEditView from "./Products/CAHGameEditView";
 import CAHGameEditorView from "./Products/CAHGameEditorView";
 import ParticleEditorView from "./Products/ParticleEditorView1.js";
@@ -199,10 +199,10 @@ const App = (props) => {
             />
 
             <Route
-              path="/account/products/cah_manager/:deckName/edit/:cardID"
+              path="/account/products/coun_manager/:deckName/edit/:cardID"
               exact
               render={(props) => {
-                return <CAHCardEditorView {...props} />;
+                return <CoUNCardEditorView {...props} />;
               }}
             />
 
