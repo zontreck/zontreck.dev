@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Breadcrumb,
   Card,
   Tabs,
   Tab,
@@ -205,10 +204,6 @@ const AccountPage = (props) => {
   return (
     <div>
       <center>
-        <Breadcrumb>
-          <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-          <Breadcrumb.Item active>Account</Breadcrumb.Item>
-        </Breadcrumb>
         {Level == -2 && runSessionFetch()}
         <Card style={{ width: "64rem", color: "#00a5a5" }}>
           <Card.Body>

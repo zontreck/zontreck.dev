@@ -72,12 +72,6 @@ const CoUNManagerView = (props) => {
 
   return (
     <div>
-      <Breadcrumb>
-        <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="/account">Account</Breadcrumb.Item>
-        <Breadcrumb.Item disabled>Products</Breadcrumb.Item>
-        <Breadcrumb.Item active>Cards of Utter Nonsense</Breadcrumb.Item>
-      </Breadcrumb>
       <center>
         <br />
         <div style={{ width: "50vw", height: "50vh" }}>
